@@ -23,12 +23,16 @@ sub tasks_add_POST :Path('/task/add') :Args(0) {
 
     $c->log->debug("Request data: " . $c->req->data);
     foreach my $request_data (@{$c->req->data}) {
-        my $id = $request_data->{ReqID};
+        my $id  = $request_data->{ReqID};
+        my $dur = (defined $request_data->{DurationInDays}) 
+                ? $request_data->{DurationInDays}
+                : 0;
         eval {
             my $task = $c->model('InformerDB::Task')->create({
                 id              => $id,
                 phone_number    => $request_data->{Phone},
                 rec_number      => $request_data->{ReqNumber},
+                dur_days        => $dur,
                 scheduler       => $c->model('Scheduler'),
             });
             push @result, { ReqID => $id, Result => 'ADDED' };

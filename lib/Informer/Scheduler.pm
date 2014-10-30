@@ -22,12 +22,14 @@ has table => (
 );
 
 sub schedule {
-    my ($self, $c) = @_;
+    my ($self, $c, $l) = @_;
     my $start = $self->start;
+    
+    my $limit = ($l) ? $l : $self->limit;
 
     return DateTime->now(time_zone => 'local')->add( $start ) if !$c;
 
-    Carp::croak "Maximum attempts number has been reached" unless ($c < $self->limit);
+    Carp::croak "Maximum attempts number has been reached" unless ($c < $limit);
 
     my $table = $self->table;
     my $shift = $table->[($c - 1) % scalar(@$table)];

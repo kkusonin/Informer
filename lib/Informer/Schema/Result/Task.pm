@@ -86,6 +86,13 @@ __PACKAGE__->table("tasks");
   is_nullable: 0
   size: 64
 
+=head2 dur_days
+
+  data_type: 'smallint'
+  default_value: 0
+  extra: {unsigned => 1}
+  is_nullable: 0
+
 =head2 next_call_time
 
   data_type: 'timestamp'
@@ -140,6 +147,13 @@ __PACKAGE__->add_columns(
   { data_type => "integer", default_value => 0, is_nullable => 0 },
   "rec_number",
   { data_type => "varchar", default_value => "", is_nullable => 0, size => 64 },
+  "dur_days",
+  {
+    data_type => "smallint",
+    default_value => 0,
+    extra => { unsigned => 1 },
+    is_nullable => 0,
+  },
   "next_call_time",
   {
     data_type => "timestamp",
@@ -208,8 +222,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07042 @ 2014-09-29 06:32:04
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:IYKsrDocPoFe4H239QH5iw
+# Created by DBIx::Class::Schema::Loader v0.07042 @ 2014-10-30 14:48:35
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:wbC1Zgs/CGWI3jPFmOyZ3g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration
@@ -327,7 +341,9 @@ sub complete_last_call {
         $self->update;
     }
     elsif ($callnum < $self->scheduler->limit) {
-        $self->update({next_call_time => $self->scheduler->schedule($callnum),});
+        $self->update({
+            next_call_time => $self->scheduler->schedule($callnum, $self->dur_days),
+        });
     }
     else {
         $status = $self->status_for('MAXCALL');

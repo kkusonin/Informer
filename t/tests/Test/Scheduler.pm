@@ -70,7 +70,13 @@ sub schedule : Tests {
     cmp_ok $scheduler->schedule(6), '>=', $dt2;
     cmp_ok $scheduler->schedule(6), '<=', $dt3;
     throws_ok { $scheduler->schedule(7) }
-        qr/^Maximum attempts number has been reached/;
+        qr/^Maximum attempts number has been reached/,
+        '...raises error when limit is reached';
+    ok($scheduler->schedule(7, 10), '...but limit can be overrided and increased');
+    throws_ok { $scheduler->schedule(2,1) }
+        qr/^Maximum attempts number has been reached/,
+        '...limit can be decreased also';
+
 }
 
 
