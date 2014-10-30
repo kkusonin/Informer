@@ -66,19 +66,20 @@ sub tasks_cancel_POST : Path('/task/cancel') {
 
 sub update_task_POST :Path('/task') :Args(1) {
     my ($self, $c, $id) = @_;
-
-    my $task      = $c->model('InformerDB::Task')->find($id);
-    my $scheduler = $c->model('Scheduler');
-    my $reporter  = $c->model('Reporter');
-
-    $task->reporter($reporter);
-    $task->scheduler($scheduler);
     
-    my $status_str = $c->request->params->{status};
-    my $cause = $c->request->params->{cause};
+    eval {
+	    my $task      = $c->model('InformerDB::Task')->find($id);
+	    my $scheduler = $c->model('Scheduler');
+	    my $reporter  = $c->model('Reporter');
 
-    $task->complete_last_call($status_str, $cause);
+	    $task->reporter($reporter);
+	    $task->scheduler($scheduler);
+	    
+	    my $status_str = $c->request->params->{status};
+	    my $cause = $c->request->params->{cause};
 
+	    $task->complete_last_call($status_str, $cause);
+    };
     $self->status_ok(
         $c,
         entity => {},

@@ -21,7 +21,7 @@ sub startup : Tests(startup => 2) {
     my $schema = Informer::Schema->connect(
         'dbi:mysql:informer',
         'informer',
-        'informer',
+        'recLS12qh!',
         { RaiseError => 1, mysql_enable_utf8 => 1 }
     ) or die "Can't connect database";
 

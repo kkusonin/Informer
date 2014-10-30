@@ -1,3 +1,4 @@
+#!/usr/bin/perl
 use strict 'vars';
 use utf8;
 use Informer::Schema;

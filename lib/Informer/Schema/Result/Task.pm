@@ -270,13 +270,13 @@ sub ready_to_call {
 sub call_info {
     my $self = shift;
 
-    my $id = time . '-' . $self->id . '-' . ($self->calls + 1);
+    my $uid = time . '-' . $self->id . '-' . ($self->calls + 1);
 
     return { 
         phone_number  => $self->phone_number,
-        rec_id        => $self->id,
+        taskid        => $self->id,
         rec_number    => $self->rec_number,
-        sessionid     => $id,
+        sessionid     => $uid,
     }
 }
 
@@ -371,7 +371,7 @@ sub result {
     tie my %result, 'Tie::IxHash';
     $result{ReqID}          = $self->id;
     $result{ResultID}       = $self->status->id;
-    $result{ResultDescrip}  = $self->status->description;
+    $result{ResultDescript} = $self->status->description;
     $result{ResultDate}     = $self->update_time->strftime("%H:%M:%S %d-%m-%Y");
 
     return \%result;

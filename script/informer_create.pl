@@ -1,4 +1,4 @@
-#!C:\Perl64\perl\bin\perl.exe
+#!/usr/bin/env perl
 
 use strict;
 use warnings;

@@ -22,7 +22,7 @@ has spool   => (
     is        => 'ro',
     isa       => 'Str',
     init_arg  => 'spool_dir',
-    default   => '/var/spool/asterisk'
+    default   => '/var/spool/asterisk/outgoing'
 );
 
 has context => (

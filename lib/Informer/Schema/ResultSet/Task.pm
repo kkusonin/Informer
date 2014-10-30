@@ -5,7 +5,7 @@ use base 'DBIx::Class::ResultSet';
 use DateTime;
 
 sub ready_to_call {
-    my ($self, $rows) = @_;
+    my ($self) = @_;
 
     my $dtp = $self->result_source
                    ->schema
@@ -22,14 +22,13 @@ sub ready_to_call {
         },
         {
             join      => 'status',
-            rows      => $rows,
-            order_by  => 'next_call_time'
+            order_by  => 'next_call_time',
         });
 
 }
 
 sub ready_to_report {
-    my ($self, $rows) = @_;
+    my ($self) = @_;
 
     return $self->search({
             'status.final'  => 1,
@@ -37,8 +36,7 @@ sub ready_to_report {
         },
         {
             join      => 'status',
-            rows      => $rows,
-            order_by  => 'update_time'
+            order_by  => 'update_time',
         });
 }
 

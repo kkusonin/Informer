@@ -13,7 +13,7 @@ BEGIN {use_ok 'Informer::Controller::Task'; }
 my $schema = Informer::Schema->connect(
     'dbi:mysql:informer',
     'informer',
-    'informer',
+    'recLS12qh!',
     { RaiseError => 1, mysql_enable_utf8 => 1 }
 );
 

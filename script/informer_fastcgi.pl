@@ -1,4 +1,4 @@
-#!C:\Perl64\perl\bin\perl.exe
+#!/usr/bin/env perl
 
 use Catalyst::ScriptRunner;
 Catalyst::ScriptRunner->run('Informer', 'FastCGI');
