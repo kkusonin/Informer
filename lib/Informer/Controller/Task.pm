@@ -24,8 +24,8 @@ sub tasks_add_POST :Path('/task/add') :Args(0) {
     $c->log->debug("Request data: " . $c->req->data);
     foreach my $request_data (@{$c->req->data}) {
         my $id  = $request_data->{ReqID};
-        my $dur = (defined $request_data->{DurationInDays}) 
-                ? $request_data->{DurationInDays}
+        my $dur = (defined $request_data->{DurationInDay}) 
+                ? $request_data->{DurationInDay}
                 : 0;
         eval {
             my $task = $c->model('InformerDB::Task')->create({
